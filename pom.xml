@@ -18,6 +18,12 @@
     <maven.compiler.target>1.7</maven.compiler.target>
   </properties>
 
+  <modules>
+    <module>rpcapi</module>
+    <module>rpcclient</module>
+    <module>rpcserver</module>
+  </modules>
+
   <dependencies>
     <dependency>
       <groupId>junit</groupId>

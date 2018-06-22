@@ -1,6 +1,8 @@
 package com.lebron.server;
 
 import com.lebron.api.IHello;
+import com.lebron.server.zk.IRegistryCenter;
+import com.lebron.server.zk.IRegistyCenterImpl;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,13 +15,21 @@ import java.util.concurrent.Executors;
  * date: 2018/6/21
  */
 public class Server {
-    ExecutorService executorService = Executors.newCachedThreadPool();
+    private ExecutorService executorService = Executors.newCachedThreadPool();
+    private IRegistryCenter registryCenter;
+
+    private int port;
+
+    public Server(IRegistryCenter registryCenter, int port) {
+        this.registryCenter = registryCenter;
+        this.port = port;
+    }
 
     public void publish() {
-        registryService();
         try {
-            ServerSocket serverSocket = new ServerSocket(8000);
+            ServerSocket serverSocket = new ServerSocket(port);
             System.out.println("服务启动了");
+
             while (true) {
                 Socket socket = serverSocket.accept();
                 executorService.execute(new RequestHandler(socket));
@@ -29,13 +39,8 @@ public class Server {
         }
     }
 
-    private void registryService() {
-        IHello iHello = new IHelloImpl();
-        RequestHandler.objectMap.put(IHello.class.getName(), iHello);
-    }
-
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.publish();
+    public void registryService(IHello iHello, Class<?> interfaceClazz) {
+        RequestHandler.objectMap.put(interfaceClazz.getName(), iHello);
+        registryCenter.registry(interfaceClazz.getName(), "127.0.0.1:" + port);
     }
 }

@@ -1,6 +1,8 @@
 package com.lebron.client;
 
 import com.lebron.api.IHello;
+import com.lebron.client.zk.IServiceDiscover;
+import com.lebron.client.zk.IServiceDiscoverImpl;
 
 /**
  * @author: shenggao
@@ -8,7 +10,10 @@ import com.lebron.api.IHello;
  */
 public class Client {
     public static void main(String[] args) {
-        IHello hello = new ClientProxy().clientProxy(IHello.class, "127.0.0.1", 8000);
-        System.out.print(hello.hello());
+        IServiceDiscover iServiceDiscover = new IServiceDiscoverImpl();
+        IHello hello = new ClientProxy().clientProxy(IHello.class, iServiceDiscover);
+        for (int i = 0; i < 10; i++) {
+            System.out.println(hello.hello());
+        }
     }
 }

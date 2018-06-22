@@ -15,18 +15,13 @@ public class TcpTransport {
     private String host;
     private int port;
 
-    public TcpTransport(String host, int port) {
-        this.host = host;
-        this.port = port;
-    }
-
     public Object send(RpcRequest request) {
         ObjectOutputStream objectOutputStream = null;
         ObjectInputStream objectInputStream = null;
         Socket socket = null;
         Object result = null;
         try {
-            socket = new Socket("127.0.0.1", 8000);
+            socket = new Socket(host, port);
             objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectOutputStream.writeObject(request);
             objectInputStream = new ObjectInputStream(socket.getInputStream());
@@ -57,5 +52,10 @@ public class TcpTransport {
             }
         }
         return result;
+    }
+
+    public TcpTransport(String host, int port) {
+        this.host = host;
+        this.port = port;
     }
 }

@@ -22,6 +22,7 @@
     <module>rpcclient</module>
     <module>rpcserver</module>
     <module>zookeeper</module>
+      <module>dubbotest</module>
   </modules>
 
   <dependencies>

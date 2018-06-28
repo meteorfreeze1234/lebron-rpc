@@ -13,6 +13,6 @@ public class App
     {
         ExtensionLoader<Protocol> extensionLoader = ExtensionLoader.getExtensionLoader(Protocol.class);
         Protocol protocol = extensionLoader.getAdaptiveExtension();
-//        extensionLoader.getExtension("myProtocol");
+        System.out.println(protocol.getDefaultPort());
     }
 }

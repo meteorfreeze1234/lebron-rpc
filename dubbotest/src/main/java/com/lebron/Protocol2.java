@@ -9,13 +9,14 @@ import com.alibaba.dubbo.rpc.RpcException;
 
 /**
  * @author: shenggao
- * date: 2018/6/27
+ * date: 2018/6/28
  */
+
 @Adaptive
-public class MyProtocol implements Protocol {
+public class Protocol2 implements Protocol {
     @Override
     public int getDefaultPort() {
-        return 123213;
+        return 111111;
     }
 
     @Override
